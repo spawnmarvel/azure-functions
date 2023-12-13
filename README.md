@@ -109,12 +109,20 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 ```
 
-## Logging and log analytics (Kusto)
+## Logging and log analytics
+
+https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview
 
 * Use logging.level as normal in the code
 * Create a log analytics workspace
 * Enable Applictions insight on the function app , select the loganalytics workspace
 
+
+## Kusto
+
+https://learn.microsoft.com/en-us/azure/azure-monitor/logs/get-started-queries
+
+*
 
 ## Alerts and logic app
 
