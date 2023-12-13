@@ -10,13 +10,16 @@ https://learn.microsoft.com/en-us/azure/azure-functions/
 ## How to steps
 
 * Create an rg and add an azure function
-* Select linux, Python and create a storage account
+* Function name must be the same as the function you will create.
+* Select linux, Python, code consumption (serverless) and create a storage account
+* Application insight enable later
+* Deployment disable, git will be enabled later, now we just push with ps1
 * Identity, set the function app identity to be system assigned
-* On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor
+* On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
 
 Note! Use correct security with auth-level, this is just an example.
 
-# Create function
+##  Create function
 
 https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python?tabs=windows%2Cbash%2Cazure-cli&pivots=python-mode-decorators
 
@@ -71,6 +74,39 @@ az login --tenant
 
 func azure functionapp publish GetCoinStatus
 
+[...]
+Deployment successful. deployer = Push-Deployer deploymentPath = Functions App ZipDeploy. Extract zip. Remote build.
+Remote build succeeded!
+Syncing triggers...
+
 # Now visit URL
 
+https://getcoinstatus.azurewebsites.net
+
+# append /api/function name
+
+This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.
+
+
 ```
+
+## Update function
+
+* Put all imports or libs in requirements.txt
+* Add code inside function name
+* Test it, you might need to az login if much dependencies
+* Publish it
+
+Edit _init_.py example
+
+```py
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    workerInstance = Worker()
+    # [...]
+    li = [sol_status, dot_status, xrp_status, ada_status, coinmarket, length_of_queue]
+    return func.HttpResponse(str(li), mimetype="text/json")
+
+```
+
+## Logging, alerts and logic app
