@@ -110,3 +110,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 ```
 
 ## Logging, alerts and logic app
+
+Use logging.level as normal
+
+Applictions insight enable, select or make a loganalytics workspace

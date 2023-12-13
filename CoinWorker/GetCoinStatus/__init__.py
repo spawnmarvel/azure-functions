@@ -1,24 +1,36 @@
 import logging
+import requests
+
+from GetCoinStatus.worker import Worker
 
 import azure.functions as func
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
+    workerInstance = Worker()
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    solnok = workerInstance.get_solnok()
+    sol_status = workerInstance.calculate_status(solnok)
+    
+    adanok = workerInstance.get_adanok()
+    ada_status = workerInstance.calculate_status(adanok)
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+    dotnok = workerInstance.get_dotnok()
+    dot_status = workerInstance.calculate_status(dotnok)
+
+    xrpnok = workerInstance.get_xrpnok()
+    xrp_status = workerInstance.calculate_status(xrpnok)
+
+    # solbid = workerInstance.get_solnok_bid()
+    # adabid = workerInstance.get_adanok_bid()
+    # dotbid = workerInstance.get_dotnok_bid()
+    # xrpbid = workerInstance.get_xrpnok_bid()
+    # url coin market
+    coinmarket = workerInstance.get_coin_market()
+
+    # queue
+    # msg_from_queue = workerInstance.receive_queue_msg()
+    length_of_queue = workerInstance.queue_length()
+    li = [sol_status, dot_status, xrp_status, ada_status, coinmarket, length_of_queue]
+    return func.HttpResponse(str(li), mimetype="text/json")
