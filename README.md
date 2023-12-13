@@ -109,8 +109,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 ```
 
-## Logging, alerts and logic app
+## Logging and log analytics (Kusto)
 
-Use logging.level as normal
+* Use logging.level as normal in the code
+* Create a log analytics workspace
+* Enable Applictions insight on the function app , select the loganalytics workspace
 
-Applictions insight enable, select or make a loganalytics workspace
+
+## Alerts and logic app
+
