@@ -118,7 +118,7 @@ In the function app you can log the stream and view the running result
 
 * Use logging.level as normal in the code
 * Create a log analytics workspace
-* On the function app got to Diagnostic settings
+* On the function app go to Diagnostic settings, enable it.
 * Enable Function Application Logs to destination select the loganalytics workspace
 
 
