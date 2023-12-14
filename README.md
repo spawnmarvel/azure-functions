@@ -109,20 +109,38 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 ```
 
-## Logging and log analytics
 
-https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview
+## Log stream
+
+In the function app you can log the stream and view the running result
+
+## Logging and log analytics
 
 * Use logging.level as normal in the code
 * Create a log analytics workspace
 * Enable Applictions insight on the function app , select the loganalytics workspace
+
+Set up https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitor-log-analytics?tabs=python
+
+General https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview
+
 
 
 ## Kusto
 
 https://learn.microsoft.com/en-us/azure/azure-monitor/logs/get-started-queries
 
-*
+Visuals at https://follow-e-lo.com/2023/12/12/azure-function-python/
+
+* The take operator is perfect for this task, because it returns a specific number of arbitrary rows.
+* You’ll use the project operator to define which columns you want to see in the output and also to define new columns on the fly on the tabular.
+
+```kusto
+FunctionAppLogs
+| project TimeGenerated, HostInstanceId, Message
+| where Message == "SOLNOK:"
+| take 2
+```
 
 ## Alerts and logic app
 
