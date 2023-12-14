@@ -12,7 +12,7 @@ https://learn.microsoft.com/en-us/azure/azure-functions/
 * Create an rg and add an azure function
 * Function name must be the same as the function you will create.
 * Select linux, Python, code consumption (serverless) and create a storage account
-* Application insight enable later
+* Application insight will be enable later
 * Deployment disable, git will be enabled later, now we just push with ps1
 * Identity, set the function app identity to be system assigned
 * On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
@@ -25,7 +25,8 @@ https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cl
 
 
 ```ps1
-# This git repos was cloned in azure-functions
+# A git repos was create first
+# Thegit repos was cloned in azure-functions
 cd c:\giti2023\azure-functions
 
 # Run the func init command as follows to create a functions project
