@@ -70,7 +70,7 @@ http://localhost:7071/api/GetCoinStatus
 This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.
 
 ````
-Publish function to Azure
+## Publish function to Azure
 
 ```ps1
 # Publish is
