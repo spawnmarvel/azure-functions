@@ -35,7 +35,7 @@ class Worker:
         logging.info("SOLNOK:")
         MARKET_SOLNOK = "https://api.firi.com/v2/markets/SOLNOK"
         stats = {}
-        stats["Api version"] = "1.6. Mail alert LL-HH"
+        stats["Api version"] = "1.7. Mail alert LL-HH"
         try:
             rv = requests.get(MARKET_SOLNOK, headers={"User-Agent": "XY"})
             result = rv.json()
@@ -57,7 +57,7 @@ class Worker:
             # limits
             stats["Buy warning"] = 50
             stats["Buy alert"] = 100
-            stats["Hold warning"] = 700
+            stats["Hold warning"] = 774
             stats["Hold alert"] = 1000
             logging.info(stats)
         except Exception as ex:
