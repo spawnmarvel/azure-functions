@@ -25,7 +25,7 @@ https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cl
 
 
 ```ps1
-
+# This git repos was cloned in azure-functions
 cd c:\giti2023\azure-functions
 
 # Run the func init command as follows to create a functions project
@@ -126,3 +126,18 @@ https://learn.microsoft.com/en-us/azure/azure-monitor/logs/get-started-queries
 
 ## Alerts and logic app
 
+
+
+## Functions
+
+CoinWorker->GetCoinStatus 
+* Type httptrigger
+* Get data from external API
+* if limit, insert to queue
+
+QueueWorker->GetQueueStatus http trigger
+* Type httptrigger
+* Get data from queue
+
+Next workspace->FunctionName
+* Type
