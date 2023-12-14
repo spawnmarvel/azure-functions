@@ -114,16 +114,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 In the function app you can log the stream and view the running result
 
-## Logging and log analytics
+## Log and diagnostics settings
 
 * Use logging.level as normal in the code
 * Create a log analytics workspace
-* Enable Applictions insight on the function app , select the loganalytics workspace
+* On the function app got to Diagnostic settings
+* Enable Function Application Logs to destination select the loganalytics workspace
+
 
 Set up https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitor-log-analytics?tabs=python
 
 General https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview
-
 
 
 ## Kusto
