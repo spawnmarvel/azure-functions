@@ -19,7 +19,7 @@ https://learn.microsoft.com/en-us/azure/azure-functions/
 
 Note! Use correct security with auth-level, this is just an example.
 
-##  Create project function
+## Create function project
 
 https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python?tabs=windows%2Cbash%2Cazure-cli&pivots=python-mode-decorators
 
@@ -38,7 +38,7 @@ Found Python version 3.10.7 (py).
 cd coinWorker
 
 ```
-## Create function options
+## Create function (options)
 
 ```ps1
 # Create a function
@@ -75,7 +75,7 @@ http://localhost:7071/api/GetCoinStatus
 This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.
 
 ```
-## Publish function to Azure
+## Publish function to az
 
 ```ps1
 # Publish is
