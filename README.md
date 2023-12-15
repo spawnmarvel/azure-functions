@@ -34,7 +34,7 @@ MS Learn:
 * etc
 https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&languages=python
 
-## How to steps
+## How to steps as an example with CoinWorker
 
 * Create an rg and add an azure function
 * Function name must be the same as the function you will create.
