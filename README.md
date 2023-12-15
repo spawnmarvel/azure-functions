@@ -5,7 +5,34 @@ Testing and learning Azure functions
 
 https://learn.microsoft.com/en-us/azure/azure-functions/
 
-## Python
+## MS Learn Python Azure Functions samples
+
+When creating a new functions here are the options:
+
+* Azure Blob Storage trigger
+* Azure Cosmos DB trigger
+* Durable Functions activity
+* Durable Functions entity
+* Durable Functions HTTP starter
+* Durable Functions orchestrator
+* Azure Event Grid trigger
+* Azure Event Hub trigger
+* HTTP trigger
+* Kafka output
+* Kafka trigger
+* Azure Queue Storage trigger
+* RabbitMQ trigger
+* Azure Service Bus Queue trigger
+* Azure Service Bus Topic trigger
+* Timer trigger
+
+MS Learn:
+
+* Sample: Load data from SQL using Python and Azure Functions
+* Getting the list of Resource Groups using Azure Functions
+* Data Cleaning Pipeline
+* etc
+https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&languages=python
 
 ## How to steps
 
@@ -75,6 +102,7 @@ http://localhost:7071/api/GetCoinStatus
 This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.
 
 ```
+
 ## Publish function to az
 
 ```ps1
