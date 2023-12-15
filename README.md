@@ -181,9 +181,12 @@ FunctionAppLogs
 | take 2
 ```
 
-## Alerts and logic app
+## Logic app and alerts
 
+* Create a logic app
+* Http trigger to run the request
 
+* Create mail alert on log statment
 
 ## Functions
 
