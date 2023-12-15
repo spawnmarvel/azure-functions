@@ -43,6 +43,7 @@ https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&langu
 * Deployment disable, git will be enabled later, now we just push with ps1
 * Identity, set the function app identity to be system assigned
 * On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
+* TODO send same data to a table also or more data to the table
 
 Note! Use correct security with auth-level, this is just an example.
 
