@@ -228,4 +228,10 @@ Table:
 
 https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python
 
-How to hide API keys from git example, add to .gitignore *.txt, add your keys to thefile.txt
+How to hide API keys from git example:
+* .gitignore = env.py
+* Git push
+* Add env.py to project
+* code = API_CONNECTION = "TEST123"
+* Import it in module = from GetMapStatus.env import API_CONNECTION
+* Use ut = self.row =  API_CONNECTION
