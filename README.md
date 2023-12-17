@@ -228,6 +228,4 @@ Table:
 
 https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python
 
-How to hide API keys from git
-
-https://arturosbr.medium.com/how-to-hide-api-keys-from-git-in-python-86b116a90f90
+How to hide API keys from git example, add to .gitignore *.txt, add your keys to thefile.txt
