@@ -45,6 +45,8 @@ https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&langu
 * Queue:
 * * Identity, set the function app identity to be system assigned
 * * On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
+* pip install azure-storage-queue 
+* pip install azure-identity
 
 Note! Use correct security with auth-level, this is just an example.
 
@@ -218,6 +220,7 @@ func start
 ```
 
 * API for data, https://ws.geonorge.no/kommuneinfo/v1/
+* pip install azure-data-tables
 
 Table:
 
