@@ -159,5 +159,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# https://arturosbr.medium.com/how-to-hide-api-keys-from-git-in-python-86b116a90f90
-.env
+.txt
