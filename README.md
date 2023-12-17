@@ -34,18 +34,30 @@ MS Learn:
 * etc
 https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&languages=python
 
-## How to steps as an example with CoinWorker
+## How to steps as an example with CoinWorker Http trigger (Queue operations)
 
+* API for data, https://developers.firi.com
 * Create an rg and add an azure function
 * Function name must be the same as the function you will create.
 * Select linux, Python, code consumption (serverless) and create a storage account
 * Application insight will be enable later
 * Deployment disable, git will be enabled later, now we just push with ps1
-* Identity, set the function app identity to be system assigned
-* On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
-* TODO send same data to a table also or more data to the table
+* Queue:
+* * Identity, set the function app identity to be system assigned
+* * On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
 
 Note! Use correct security with auth-level, this is just an example.
+
+
+## Azure Queue credentials
+
+* Shared Key
+* Connection String
+* Shared Access Signature Token
+* Managed identity
+
+https://learn.microsoft.com/en-us/python/api/overview/azure/storage-queue-readme?view=azure-python
+
 
 ## Create function project
 
@@ -189,16 +201,33 @@ FunctionAppLogs
 
 * Create mail alert on log statment
 
-## Functions
 
-CoinWorker->GetCoinStatus 
-* Type httptrigger
-* Get data from external API
-* if limit, insert to queue
+## How to steps as an example with MapWorker Http trigger (Table operations)
 
-QueueWorker->GetQueueStatus http trigger
-* Type httptrigger
-* Get data from queue
+```ps1
+azure-functions> func init MapWorker
 
-Next workspace->FunctionName
-* Type
+Use the up/down arrow keys to select a worker runtime:python
+
+cd .\MapWorker\
+
+func new --name GetMapStatus --template "HTTP trigger" --authlevel "anonymous"
+
+
+func start
+```
+
+* API for data, https://ws.geonorge.no/kommuneinfo/v1/
+
+Table:
+
+* Shared Key
+* Connection String
+* Shared Access Signature Token
+* Managed identity? Should work
+
+https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python
+
+How to hide API keys from git
+
+https://arturosbr.medium.com/how-to-hide-api-keys-from-git-in-python-86b116a90f90

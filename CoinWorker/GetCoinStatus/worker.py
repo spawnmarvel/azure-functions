@@ -3,7 +3,6 @@ import logging
 from datetime import datetime
 from GetCoinStatus.st_queue import StorageQueue
 
-
 logging.info("Running worker")
 
 # https://developers.firi.com/
@@ -13,10 +12,8 @@ class Worker:
 
     def __init__(self):
         self.queueInstance = StorageQueue()
-        # self.queueInstance.send_msg("HeartBeat")
-        # a test for log analytics workspace log alerts
-        # logging.info("ALERTMSG-COIN")
-
+       
+   
     def get_all(self):
         stats = {}
         stats["Api version"] = "1.0"
@@ -35,30 +32,25 @@ class Worker:
         logging.info("SOLNOK:")
         MARKET_SOLNOK = "https://api.firi.com/v2/markets/SOLNOK"
         stats = {}
-        stats["Api version"] = "1.7. Mail alert LL-HH"
+        stats["Api version"] = "1.8"
         try:
             rv = requests.get(MARKET_SOLNOK, headers={"User-Agent": "XY"})
             result = rv.json()
             logging.debug(result)
             logging.debug(rv.status_code)
-            market = ""
             stats["Status Code"] = rv.status_code
             stats["Coin"] = "SOLNOK"
-            low = result["low"]
-            high = result["high"]
             change = result["change"]
             last = result["last"]
-            # stats["low"] = low
-            # stats["high"] = high
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
             # limits
-            stats["Buy warning"] = 50
-            stats["Buy alert"] = 100
-            stats["Hold warning"] = 774
-            stats["Hold alert"] = 1000
+            stats["Low 2"] = 125
+            stats["Low 1"] = 250
+            stats["High 1"] = 750
+            stats["High 2"] = 2000
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -68,30 +60,25 @@ class Worker:
         logging.info("ADANOK:")
         MARKET_ADANOK = "https://api.firi.com/v2/markets/ADANOK"
         stats = {}
-        stats["Api version"] = "1.6. Mail alert LL-HH"
+        stats["Api version"] = "1.6"
         try:
             rv = requests.get(MARKET_ADANOK, headers={"User-Agent": "XY"})
             result = rv.json()
             logging.debug(result)
             logging.debug(rv.status_code)
-            market = ""
             stats["Status Code"] = rv.status_code
             stats["Coin"] = "ADANOK"
-            low = result["low"]
-            high = result["high"]
             change = result["change"]
             last = result["last"]
-            # stats["low"] = low
-            # stats["high"] = high
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
             # limits
-            stats["Buy warning"] = 1.8
-            stats["Buy alert"] = 2
-            stats["Hold warning"] = 8
-            stats["Hold alert"] = 12
+            stats["Low 2"] = 1.8
+            stats["Low 1"] = 2
+            stats["High 1"] = 8
+            stats["High 2"] = 12
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -101,30 +88,25 @@ class Worker:
         logging.info("DOTNOK:")
         MARKET_DOTNOK = "https://api.firi.com/v2/markets/DOTNOK"
         stats = {}
-        stats["Api version"] = "1.5. Mail alert LL-HH"
+        stats["Api version"] = "1.5"
         try:
             rv = requests.get(MARKET_DOTNOK, headers={"User-Agent": "XY"})
             result = rv.json()
             logging.debug(result)
             logging.debug(rv.status_code)
-            market = ""
             stats["Status Code"] = rv.status_code
             stats["Coin"] = "DOTNOK"
-            low = result["low"]
-            high = result["high"]
             change = result["change"]
             last = result["last"]
-            # stats["low"] = low
-            # stats["high"] = high
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
             # limits
-            stats["Buy warning"] = 30
-            stats["Buy alert"] = 60
-            stats["Hold warning"] = 110
-            stats["Hold alert"] = 150
+            stats["Low 2"] = 30
+            stats["Low 1"] = 60
+            stats["High 1"] = 110
+            stats["High 2"] = 150
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -134,30 +116,25 @@ class Worker:
         logging.info("XRPNOK:")
         MARKET_DOTNOK = "https://api.firi.com/v2/markets/XRPNOK"
         stats = {}
-        stats["Api version"] = "1.5. Mail alert LL-HH"
+        stats["Api version"] = "1.5"
         try:
             rv = requests.get(MARKET_DOTNOK, headers={"User-Agent": "XY"})
             result = rv.json()
             logging.debug(result)
             logging.debug(rv.status_code)
-            market = ""
             stats["Status Code"] = rv.status_code
             stats["Coin"] = "XRPNOK"
-            low = result["low"]
-            high = result["high"]
             change = result["change"]
             last = result["last"]
-            # stats["low"] = low
-            # stats["high"] = high
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
             # limits
-            stats["Buy warning"] = 1.8
-            stats["Buy alert"] = 2
-            stats["Hold warning"] = 10
-            stats["Hold alert"] = 15
+            stats["Low 2"] = 1.8
+            stats["Low 1"] = 2
+            stats["High 1"] = 10
+            stats["High 2"] = 15
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -169,54 +146,56 @@ class Worker:
         # msg = coin_dict["Coin"] + ";" + coin_dict["last"]
         try:
             logging.info("Caluclate status")
-            buy_w = float(coin_dict["Buy warning"])
-            buy_a = float(coin_dict["Buy alert"])
-            hold_w = float(coin_dict["Hold warning"])
-            hold_a = float(coin_dict["Hold alert"])
-            current_last = float(coin_dict["last"])
+            low_2 = float(coin_dict["Low 2"])
+            low_1 = float(coin_dict["Low 1"])
+            high_1 = float(coin_dict["High 1"])
+            high_2 = float(coin_dict["High 2"])
+            current_value = float(coin_dict["last"])
             
-            # SOL EXAMPLE, < 50
-            if current_last < buy_w:
-                market = "Bear and Buy alert 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+            # SOL EXAMPLE, < 125
+            if current_value <low_2:
+                market = "Bear Low 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
                 logging.info("ALERTMSG-COIN")
             
-            # SOL EXAMPLE, >= 50 and < 100
-            elif current_last >= buy_w and current_last < buy_a:
-                market = "Bear and Buy warning 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+            # SOL EXAMPLE, >= 125 and < 250
+            elif current_value >=low_2 and current_value < low_1:
+                market = "Bear Low 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 logging.info("ALERTMSG-COIN")
             
-            # SOL EXAMPLE, >= 100 and < 800
-            elif current_last >= buy_a and current_last < hold_w:
-                market = "Bear and Hold alert 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
-                # self.queueInstance.send_msg(market)
+            # SOL EXAMPLE, >= 250 and < 1000
+            elif current_value >= low_1 and current_value < high_1:
+                market = "Waiting. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                # wait....
            
-            # SOL EXAMPLE, >= 800 and < 1000
-            elif current_last >= hold_w and current_last < hold_a:
-                market = "Bull and Hold warning 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+            # SOL EXAMPLE, >= 1000 and < 2000
+            elif current_value >= high_1 and current_value < high_2:
+                market = "Bull High 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 self.queueInstance.send_msg(market)
                 logging.info("ALERTMSG-COIN")
 
-            elif current_last >= hold_a:
+            # SOL EXAMPLE >= 2000 and < 3000
+            elif current_value >= high_2 and current_value < (high_2 * 1.5):
                 # earning if follow only buy limit
-                market = "Bull and Sell alert 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull High 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 logging.info("ALERTMSG-COIN")
             
-            elif current_last >= hold_a * 2:
+            elif current_value >= high_2 * 2:
                 # earning if follow only buy limit
-                market = "Bull and Sell alert * 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull high * 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 logging.info("ALERTMSG-COIN")
 
             else:
-                market = "What is market now?. View last"
+                market = "Status. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                self.queueInstance.send_msg(market)
 
             # add status here market
             coin_dict["status"] = market
