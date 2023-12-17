@@ -30,6 +30,7 @@ class Worker:
             logging.debug(result)
             logging.debug(rv.status_code)
             stats["Status Code"] = rv.status_code
+            stats["Content"] = rv.content
         except Exception as ex:
             logging.error(ex)
         return stats
