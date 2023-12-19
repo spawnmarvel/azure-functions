@@ -34,7 +34,7 @@ MS Learn:
 * etc
 https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&languages=python
 
-## How to steps as an example with CoinWorker Http trigger (Queue operations)
+## How to steps as an example with CoinWorker Http trigger (Queue operations) and Firi API
 
 * API for data, https://developers.firi.com
 * Create an rg and add an azure function
@@ -205,20 +205,8 @@ FunctionAppLogs
 * Create mail alert on log statment
 
 
-## How to steps as an example with MapWorker Http trigger (Table operations)
+## How to steps as an example with MapWorker Http trigger (Table operations) Geo Norge API
 
-```ps1
-azure-functions> func init MapWorker
-
-Use the up/down arrow keys to select a worker runtime:python
-
-cd .\MapWorker\
-
-func new --name GetMapStatus --template "HTTP trigger" --authlevel "anonymous"
-
-
-func start
-```
 
 * API for data, https://ws.geonorge.no/kommuneinfo/v1/
 * pip install azure-data-tables
@@ -240,3 +228,16 @@ How to hide API keys from git example:
 * code = API_CONNECTION = "TEST123"
 * Import it in module = from GetMapStatus.env import API_CONNECTION
 * Use ut = self.row =  API_CONNECTION
+
+```ps1
+azure-functions> func init MapWorker
+
+Use the up/down arrow keys to select a worker runtime:python
+
+cd .\MapWorker\
+
+func new --name GetMapStatus --template "HTTP trigger" --authlevel "anonymous"
+
+
+func start
+```
