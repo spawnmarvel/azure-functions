@@ -3,11 +3,16 @@ Testing and learning Azure functions
 
 ## Docs
 
-https://learn.microsoft.com/en-us/azure/azure-functions/
+
+Best practices for reliable Azure Functions
+
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-best-practices?tabs=python
+
 
 One of the key features of Azure Functions is its integration with other Azure services, such as Azure Storage.
 When creating an Azure Functions App, a dedicated storage account is also created, the Functions App relies on the storage for various operations such as trigger management and logging.
 
+https://learn.microsoft.com/en-us/azure/azure-functions/
 ## MS Learn Python Azure Functions samples
 
 When creating a new functions here are the options:
