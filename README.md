@@ -155,7 +155,7 @@ This HTTP triggered function executed successfully. Pass a name in the query str
 ## Update function
 
 * Put all imports or libs in requirements.txt
-* Add code inside function name, worker.py, st_queue.py
+* Add the code inside function name folder, worker.py, st_queue.py
 * Test it, you might need to az login if much dependencies
 * Publish it
 
