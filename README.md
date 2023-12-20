@@ -170,6 +170,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     li = [sol_status, dot_status, xrp_status, ada_status, coinmarket, length_of_queue]
     return func.HttpResponse(str(li), mimetype="text/json")
 
+# st_queue.py
+from azure.identity import DefaultAzureCredential
+from azure.storage.queue import QueueServiceClient, QueueClient, QueueMessage
 
 # requirements.txt
 # Do not include azure-functions-worker in this file
