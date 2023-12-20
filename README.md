@@ -155,13 +155,14 @@ This HTTP triggered function executed successfully. Pass a name in the query str
 ## Update function
 
 * Put all imports or libs in requirements.txt
-* Add code inside function name
+* Add code inside function name, worker.py, st_queue.py
 * Test it, you might need to az login if much dependencies
 * Publish it
 
-Edit _init_.py example
+Example
 
 ```py
+# _init_.py
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     workerInstance = Worker()
@@ -169,6 +170,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     li = [sol_status, dot_status, xrp_status, ada_status, coinmarket, length_of_queue]
     return func.HttpResponse(str(li), mimetype="text/json")
 
+
+# requirements.txt
+# Do not include azure-functions-worker in this file
+# The Python Worker is managed by the Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+azure-functions
+# extra
+requests
+azure-storage-queue 
+azure-identity
 ```
 
 
