@@ -127,7 +127,7 @@ This HTTP triggered function executed successfully. Pass a name in the query str
 
 ```
 
-## Publish function to az
+## Publish function to az from Github repos
 
 ```ps1
 # Publish is
