@@ -13,6 +13,12 @@ One of the key features of Azure Functions is its integration with other Azure s
 When creating an Azure Functions App, a dedicated storage account is also created, the Functions App relies on the storage for various operations such as trigger management and logging.
 
 https://learn.microsoft.com/en-us/azure/azure-functions/
+
+
+## visuals
+
+https://follow-e-lo.com/2023/12/12/azure-function-python/
+
 ## MS Learn Python Azure Functions samples
 
 When creating a new functions here are the options:
@@ -222,10 +228,11 @@ FunctionAppLogs
 
 ## Logic app and alerts
 
-* Create a logic app
+* Create a logic app, consumption plan
 * Http trigger to run the request
-
 * Create mail alert on log statment
+
+https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/tutorial-log-alert
 
 
 ## How to steps as an example with MapWorker Http trigger (Table operations) Geo Norge API
