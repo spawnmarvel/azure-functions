@@ -155,6 +155,10 @@ az login --tenant
 # still in \CoinWorker>
 func azure functionapp publish GetCoinStatus
 
+func azure functionapp publish GetCoinStatus --python
+# Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
+# Your Azure Function App has 'FUNCTIONS_WORKER_RUNTIME' set to 'python' while your local project is set to 'None'.
+
 [...]
 Deployment successful. deployer = Push-Deployer deploymentPath = Functions App ZipDeploy. Extract zip. Remote build.
 Remote build succeeded!

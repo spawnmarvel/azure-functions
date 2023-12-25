@@ -32,7 +32,7 @@ class Worker:
         logging.info("SOLNOK:")
         MARKET_SOLNOK = "https://api.firi.com/v2/markets/SOLNOK"
         stats = {}
-        stats["Api version"] = "1.8"
+        stats["Api version"] = "1.9"
         try:
             rv = requests.get(MARKET_SOLNOK, headers={"User-Agent": "XY"})
             result = rv.json()
@@ -49,8 +49,8 @@ class Worker:
             # limits
             stats["Low 2"] = 125
             stats["Low 1"] = 250
-            stats["High 1"] = 750
-            stats["High 2"] = 2000
+            stats["High 1"] = 1000
+            stats["High 2"] = 1500
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -158,40 +158,40 @@ class Worker:
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
-                logging.info("ALERTMSG-COIN")
+                logging.info("ALERTMSG-COIN-LOW-2")
             
             # SOL EXAMPLE, >= 125 and < 250
             elif current_value >=low_2 and current_value < low_1:
                 market = "Bear Low 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
-                logging.info("ALERTMSG-COIN")
+                # logging.info("ALERTMSG-COIN")
             
             # SOL EXAMPLE, >= 250 and < 1000
             elif current_value >= low_1 and current_value < high_1:
                 market = "Waiting. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # wait....
            
-            # SOL EXAMPLE, >= 1000 and < 2000
+            # SOL EXAMPLE, >= 1000 and < 1500
             elif current_value >= high_1 and current_value < high_2:
                 market = "Bull High 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 self.queueInstance.send_msg(market)
                 logging.info("ALERTMSG-COIN")
 
-            # SOL EXAMPLE >= 2000 and < 3000
+            # SOL EXAMPLE >= 1500 and < 3000
             elif current_value >= high_2 and current_value < (high_2 * 1.5):
                 # earning if follow only buy limit
                 market = "Bull High 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
-                logging.info("ALERTMSG-COIN")
+                logging.info("ALERTMSG-COIN-HIGH-2")
             
             elif current_value >= high_2 * 2:
                 # earning if follow only buy limit
                 market = "Bull high * 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
-                logging.info("ALERTMSG-COIN")
+                logging.info("ALERTMSG-COIN-MONEY")
 
             else:
                 market = "Status. " + coin_dict["Coin"] + ";" + coin_dict["last"]
