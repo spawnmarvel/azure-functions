@@ -65,6 +65,19 @@ https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&langu
 
 Note! Use correct security with auth-level, this is just an example.
 
+## Azure Functions Core Tools auth levels
+
+-authlevel	Lets you set the authorization level for an HTTP trigger. Supported values are: 
+
+* function
+* anonymous 
+* admin. 
+
+
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference?tabs=v2#func-new
+
+Example e-lo
+https://github.com/spawnmarvel/azure-automation/tree/main/azure-5-functions
 
 ## Azure Queue credentials
 
@@ -271,18 +284,3 @@ func new --name GetMapStatus --template "HTTP trigger" --authlevel "anonymous"
 
 func start
 ```
-
-## Azure Functions Core Tools auth levels
-
--authlevel	Lets you set the authorization level for an HTTP trigger. Supported values are: 
-* function
-* anonymous 
-* admin. 
-
-
-Docs
-
-https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference?tabs=v2#func-new
-
-Example e-lo
-https://github.com/spawnmarvel/azure-automation/tree/main/azure-5-functions
