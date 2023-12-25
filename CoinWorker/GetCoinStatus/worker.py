@@ -50,7 +50,7 @@ class Worker:
             stats["Low 2"] = 125
             stats["Low 1"] = 250
             stats["High 1"] = 1000
-            stats["High 2"] = 1500
+            stats["High 2"] = 2000
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
