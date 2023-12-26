@@ -27,12 +27,17 @@ class Worker:
         except Exception as ex:
             logging.error(ex)
         return stats
+    
+    def get_coin_market(self):
+        dict = {"Data NOK": "https://firi.com/no", "Api": "https://developers.firi.com/",
+                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "fb": "25.09.2022", "lb": "12.05.2023", "25":"25.12.2024", "?":"25.12.2025"}
+        return dict
 
     def get_solnok(self):
         logging.info("SOLNOK:")
         MARKET_SOLNOK = "https://api.firi.com/v2/markets/SOLNOK"
         stats = {}
-        stats["Api version"] = "1.9"
+        stats["Api version"] = "2.0"
         try:
             rv = requests.get(MARKET_SOLNOK, headers={"User-Agent": "XY"})
             result = rv.json()
@@ -49,7 +54,7 @@ class Worker:
             # limits
             stats["Low 2"] = 125
             stats["Low 1"] = 250
-            stats["High 1"] = 1000
+            stats["High 1"] = 1200
             stats["High 2"] = 2000
             logging.info(stats)
         except Exception as ex:
@@ -176,7 +181,7 @@ class Worker:
             elif current_value >= high_1 and current_value < high_2:
                 market = "Bull High 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 self.queueInstance.send_msg(market)
-                logging.info("ALERTMSG-COIN")
+                # logging.info("ALERTMSG-COIN")
 
             # SOL EXAMPLE >= 1500 and < 3000
             elif current_value >= high_2 and current_value < (high_2 * 1.5):
@@ -203,11 +208,6 @@ class Worker:
         except Exception as ex:
             logging.error(ex)
         return coin_dict
-
-    def get_coin_market(self):
-        dict = {"Data NOK": "https://firi.com/no", "Api": "https://developers.firi.com/",
-                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "ft": "25.09.2022", "lb": "12.05.2023"}
-        return dict
 
     def get_solnok_bid(self):
         logging.info("SOLNOK BID:")
