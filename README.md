@@ -252,6 +252,43 @@ FunctionAppLogs
 https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/tutorial-log-alert
 
 
+## How to steps as an example with PowerWorker Http trigger (Table operations) Strømpris API
+
+
+* API for data, https://www.hvakosterstrommen.no/strompris-api
+* pip install azure-data-tables
+* Put all imports or libs in requirements.txt
+
+Table:
+
+* Shared Key
+* Connection String
+* Shared Access Signature Token
+* Managed identity? Should work
+
+https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python
+
+How to hide API keys from git example:
+* .gitignore = env.py
+* Git push
+* Add env.py to project
+* code = API_CONNECTION = "TEST123"
+* Import it in module = from GetMapStatus.env import API_CONNECTION
+* Use ut = self.row =  API_CONNECTION
+
+```ps1
+azure-functions> func init PowerWorker
+
+Use the up/down arrow keys to select a worker runtime:python
+
+cd .\MapWorker\
+
+func new --name GetPowerStatus --template "HTTP trigger" --authlevel "anonymous"
+
+
+func start
+```
+
 ## How to steps as an example with MapWorker Http trigger (Table operations) Geo Norge API
 
 
