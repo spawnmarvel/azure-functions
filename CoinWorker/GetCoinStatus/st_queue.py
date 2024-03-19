@@ -4,6 +4,7 @@ import logging
 from azure.identity import DefaultAzureCredential
 from azure.storage.queue import QueueServiceClient, QueueClient, QueueMessage
 
+from GetCoinStatus.st_key_vault import KeyVaultWorker
 
 # https://learn.microsoft.com/en-us/azure/storage/queues/storage-python-how-to-use-queue-storage?tabs=python%2Cenvironment-variable-windows#overview
 
@@ -11,16 +12,23 @@ class StorageQueue:
 
     def __init__(self):
         self.queue_client = None
+        self.acc_url = None
+        self.keyvaultInstance = KeyVaultWorker()
+
+
+    def get_url_st(self):
+        logging.info("Azure Table storage, url qu")
+        self.acc_url = self.keyvaultInstance.get_url_qu()
 
     def connect_queue(self):
+        self.get_url_st()
         logging.info("Azure Queue storage, trying to connect")
         try:
             
             # Quickstart code goes here
-            account_url = "https://stacukgetcoinstatus.queue.core.windows.net"
             default_credential = DefaultAzureCredential()
             self.queue_client = QueueClient(
-                account_url, queue_name="coinqueue", credential=default_credential)
+                self.acc_url, queue_name="coinqueue", credential=default_credential)
             logging.info("Azure Queue storage, connection success")
         except Exception as ex:
             logging.error(ex)

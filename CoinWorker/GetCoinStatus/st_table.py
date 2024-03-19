@@ -17,22 +17,32 @@ class StorageTable():
         self.table_service_client = None
         self.table_client = None
         self.key = None
+        self.acc_name = None
+        self.acc_url = None
         self.keyvaultInstance = KeyVaultWorker()
         
 
-    def test_key(self):
-        logging.info("Azure Table storage, test key")
-        self.key = self.keyvaultInstance.get_key()
+    def get_key_tbl(self):
+        logging.info("Azure Table storage, get key tbl")
+        self.key = self.keyvaultInstance.get_secret_tbl()
+    
+    def get_name_st(self):
+        logging.info("Azure Table storage, get name st")
+        self.acc_name = self.keyvaultInstance.get_name_acc()
 
+    def get_url_st(self):
+        logging.info("Azure Table storage, url st")
+        self.acc_url = self.keyvaultInstance.get_url_tbl()
 
     def connect_table(self):
-        self.test_key()
+        self.get_key_tbl()
+        self.get_name_st()
+        self.get_url_st()
         logging.info("Azure Table storage, trying to connect to table storage")
         try:
             # Quickstart code goes here
-            account_url = "https://stacukgetcoinstatus.table.core.windows.net"
-            default_credential = AzureNamedKeyCredential("stacukgetcoinstatus", self.key)
-            self.table_service_client = TableServiceClient(account_url, credential=default_credential)
+            default_credential = AzureNamedKeyCredential(self.acc_name, self.key)
+            self.table_service_client = TableServiceClient(self.acc_url, credential=default_credential)
             # https://learn.microsoft.com/en-us/python/api/azure-data-tables/azure.data.tables.tableserviceclient?view=azure-python
             logging.info("Azure Table storage, connection success")
         except Exception as ex:
