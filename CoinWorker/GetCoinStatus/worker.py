@@ -60,7 +60,7 @@ class Worker:
             # limits
             stats["Low 2"] = 250
             stats["Low 1"] = 500
-            stats["High 1"] = 1900
+            stats["High 1"] = 2000
             # has been here two times 2021 and 2024
             # stats["High 2"] = 2000
             stats["High 2"] = 3000
