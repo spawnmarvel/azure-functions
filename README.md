@@ -327,6 +327,7 @@ Iterate over tables
 Insert entity
 
 ````log
+2024-03-19T16:47:14Z   [Information]   Success insert to table
 ```
 
 ## How to steps as an example with PowerWorker Http trigger (Table operations) Strømpris API
