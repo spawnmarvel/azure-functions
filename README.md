@@ -280,7 +280,6 @@ publish the app and verify in function app Log Stream
 ```log
 2024-03-19T15:35:28Z   [Information]   Azure Key vault get success
 2024-03-19T15:35:28Z   [Information]   Azure Table storage, trying to connect to table
-2024-03-19T15:35:28Z   [Information]   key; TOKEN-TOKEN-TOKEN=
 2024-03-19T15:35:28Z   [Information]   Azure Table storage, connection success
 
 
