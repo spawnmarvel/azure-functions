@@ -56,12 +56,22 @@ https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&langu
 * Select linux, Python, code consumption (serverless) and create a storage account
 * Application insight will be enable later
 * Deployment disable, git will be enabled later, now we just push with ps1
-* Queue:
+* Queue: st_queue.py
 * * Identity, set the function app identity to be system assigned
 * * On the storage account IAM, add role assignment function app identity to Storage Queue Data Contributor (Allows for read, write, and delete access to Azure Storage queues and queue messages)
 * pip install azure-storage-queue 
 * pip install azure-identity
 * Put all imports or libs in requirements.txt
+
+update 19.03.2024 for table
+
+* add a secret in a key vault and retrive the secret for later use for the table connection.
+* https://blog.nillsf.com/index.php/2020/09/16/connect-azure-functions-securely-to-key-vault-using-vnet-integration-and-private-link/
+* https://medium.com/@dssc2022yt/accessing-azure-key-vault-secrets-with-azure-functions-2e651980f292
+
+* Table: st_table.py
+* * Identity, set the function app identity to be system assigned
+* * On the storage account IAM, add role assignment function app identity to Storage Table Data Contributor (Allows for read, write, and delete access to Azure Storage tables and table messages)
 
 Note! Use correct security with auth-level, this is just an example.
 
@@ -251,6 +261,73 @@ FunctionAppLogs
 
 https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/tutorial-log-alert
 
+## Create a key vault for our table connection
+
+update 19.03.2024 for table
+
+* add a secret in a key vault and retrive the secret for later use for the table connection.
+* https://medium.com/@dssc2022yt/accessing-azure-key-vault-secrets-with-azure-functions-2e651980f292
+
+* https://blog.nillsf.com/index.php/2020/09/16/connect-azure-functions-securely-to-key-vault-using-vnet-integration-and-private-link/
+
+* Create a key vault allow public so we can test the code.
+* When that works we can secure it with a private link.
+* azure-keyvault for requiremenets.py
+* Azure role-based access control (recommended) in key vault, add role Key Vault Secrets User for function app
+
+publish the app and verify in function app Log Stream
+
+```log
+2024-03-19T15:35:28Z   [Information]   Azure Key vault get success
+2024-03-19T15:35:28Z   [Information]   Azure Table storage, trying to connect to table
+2024-03-19T15:35:28Z   [Information]   key; TOKEN-TOKEN-TOKEN=
+2024-03-19T15:35:28Z   [Information]   Azure Table storage, connection success
+
+
+2024-03-19T15:46:56Z   [Information]   []
+2024-03-19T15:46:56Z   [Information]   Listing Azure Table storage
+2024-03-19T15:46:56Z   [Information]   SOLNOK:
+
+
+```
+
+## Work with tables
+
+Clients
+Two different clients are provided to interact with the various components of the Table Service:
+
+TableServiceClient -
+* Get and set account setting
+* Query, create, and delete tables within the account.
+* Get a TableClient to access a specific table using the get_table_client method.
+
+TableClient -
+* Interacts with a specific table (which need not exist yet).
+* Create, delete, query, and upsert entities within the specified table.
+* Create or delete the specified table itself.
+
+
+https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python#creating-entities
+
+
+
+Iterate over tables
+
+```log
+2024-03-19T16:19:54Z   [Information]   Azure Table storage, trying to create table
+2024-03-19T16:19:54Z   [Information]   Response status: 200
+[...]
+2024-03-19T16:29:29Z   [Information]   cointable
+2024-03-19T16:29:29Z   [Information]   cointable01
+2024-03-19T16:29:29Z   [Information]   cointable01 already exists
+2024-03-19T16:29:29Z   [Information]   SOLNOK:
+2024-03-19T16:29:29Z   [Information]   {'Api version': '2.0', 'Status Code'
+```
+
+Insert entity
+
+````log
+```
 
 ## How to steps as an example with PowerWorker Http trigger (Table operations) Strømpris API
 

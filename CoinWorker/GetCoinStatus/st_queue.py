@@ -13,8 +13,9 @@ class StorageQueue:
         self.queue_client = None
 
     def connect_queue(self):
+        logging.info("Azure Queue storage, trying to connect")
         try:
-            logging.info("Azure Queue storage, trying to connect")
+            
             # Quickstart code goes here
             account_url = "https://stacukgetcoinstatus.queue.core.windows.net"
             default_credential = DefaultAzureCredential()

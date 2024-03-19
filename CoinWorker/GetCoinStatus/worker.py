@@ -3,6 +3,9 @@ import logging
 from datetime import datetime
 from GetCoinStatus.st_queue import StorageQueue
 
+from GetCoinStatus.st_table import StorageTable
+
+
 logging.info("Running worker")
 
 # https://developers.firi.com/
@@ -12,6 +15,9 @@ class Worker:
 
     def __init__(self):
         self.queueInstance = StorageQueue()
+        self.tableInstance = StorageTable()
+        # test
+        self.tableInstance.create_tabel()
        
    
     def get_all(self):
@@ -52,10 +58,12 @@ class Worker:
             stats["Time"] = current_time
             stats["last"] = last
             # limits
-            stats["Low 2"] = 125
-            stats["Low 1"] = 250
-            stats["High 1"] = 1200
-            stats["High 2"] = 2000
+            stats["Low 2"] = 250
+            stats["Low 1"] = 500
+            stats["High 1"] = 1900
+            # has been here two times 2021 and 2024
+            # stats["High 2"] = 2000
+            stats["High 2"] = 3000
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -163,6 +171,8 @@ class Worker:
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 2.", str(coin_dict["last"]))
                 logging.info("ALERTMSG-COIN-LOW-2")
             
             # SOL EXAMPLE, >= 125 and < 250
@@ -170,17 +180,24 @@ class Worker:
                 market = "Bear Low 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 1.", str(coin_dict["last"]))
+                
                 # logging.info("ALERTMSG-COIN")
             
             # SOL EXAMPLE, >= 250 and < 1000
             elif current_value >= low_1 and current_value < high_1:
                 market = "Waiting. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # wait....
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Waiting.", str(coin_dict["last"]))
            
             # SOL EXAMPLE, >= 1000 and < 1500
             elif current_value >= high_1 and current_value < high_2:
                 market = "Bull High 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 self.queueInstance.send_msg(market)
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 1.", str(coin_dict["last"]))
                 # logging.info("ALERTMSG-COIN")
 
             # SOL EXAMPLE >= 1500 and < 3000
@@ -189,6 +206,8 @@ class Worker:
                 market = "Bull High 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 2.", str(coin_dict["last"]))
                 logging.info("ALERTMSG-COIN-HIGH-2")
             
             elif current_value >= high_2 * 2:
@@ -196,6 +215,8 @@ class Worker:
                 market = "Bull high * 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
+                # insert into table storage
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear High * 2.", str(coin_dict["last"]))
                 logging.info("ALERTMSG-COIN-MONEY")
 
             else:

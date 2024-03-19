@@ -7,3 +7,6 @@ azure-functions
 requests
 azure-storage-queue 
 azure-identity
+azure-data-tables
+azure-keyvault
+azure-core

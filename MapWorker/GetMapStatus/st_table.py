@@ -6,16 +6,12 @@
 import logging
 from azure.identity import DefaultAzureCredential
 from azure.data.tables import TableServiceClient, TableClient
-from GetMapStatus.env import API_CONNECTION
 
 class StorageTable():
 
     def __init__(self):
         self.table_service_client = None
         self.table_client = None
-
-    def read_config(self):
-        self.row =  API_CONNECTION
 
     def connect_table(self):
         try:
