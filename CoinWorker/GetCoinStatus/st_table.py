@@ -65,7 +65,7 @@ class StorageTable():
         logging.info("Trying to insert to table")
         try:
             new_table_name = "cointable01"
-            row_key = str(uuid.uuid4)
+            row_key = str(uuid.uuid4())
             my_entity = {
                  u'PartitionKey': name,
                  u'RowKey': row_key,
@@ -79,7 +79,7 @@ class StorageTable():
             logging.info("Success insert to table")
         except Exception as ex:
             logging.error(ex)
-            
+
     def list_entities(self):
         self.connect_table()
         try:
