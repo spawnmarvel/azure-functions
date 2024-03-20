@@ -313,7 +313,7 @@ publish the app and verify in function app Log Stream
 
 ```
 
-## Work with tables
+## Work with tables, create new if not exist
 
 Clients
 Two different clients are provided to interact with the various components of the Table Service:
