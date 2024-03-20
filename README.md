@@ -354,6 +354,8 @@ Insert entity
 2024-03-19T17:00:56Z   [Information]   Success insert to table
 ```
 
+## Create a key vault for our table connection private link
+
 ## How to steps as an example with PowerWorker Http trigger (Table operations) Strømpris API
 
 
