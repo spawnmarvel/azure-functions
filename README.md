@@ -274,7 +274,9 @@ Cosmos DB is a superset of the Azure Table Storage functionality.
 
 https://microsoft.github.io/AzureTipsAndTricks/blog/tip166.html
 
+Appropriate Use for Table Storage
 
+https://learn.microsoft.com/en-us/answers/questions/172775/appropriate-use-for-table-storage
 
 ## Create a key vault for our table connection
 
