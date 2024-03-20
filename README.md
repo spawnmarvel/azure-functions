@@ -270,6 +270,8 @@ https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/da
 
 Cosmos DB is a superset of the Azure Table Storage functionality.
 
+![](https://github.com/spawnmarvel/azure-functions/blob/main/images/table_vs_cosmos.jpg)
+
 https://microsoft.github.io/AzureTipsAndTricks/blog/tip166.html
 
 
