@@ -261,6 +261,19 @@ FunctionAppLogs
 
 https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/tutorial-log-alert
 
+## Azure Table storage vs CosmosDB
+
+Select a candidate
+
+https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-decision-tree
+
+
+Cosmos DB is a superset of the Azure Table Storage functionality.
+
+https://microsoft.github.io/AzureTipsAndTricks/blog/tip166.html
+
+
+
 ## Create a key vault for our table connection
 
 update 19.03.2024 for table
