@@ -263,6 +263,12 @@ https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/tutorial-log-alert
 
 ## Azure Table storage vs CosmosDB
 
+Comparing Azure Cosmos DB for Table and Azure Table Storage
+
+Azure Cosmos DB for Table uses a reserved capacity model in order to ensure guaranteed performance but this means that one pays for the capacity as soon as the table is created, even if the capacity isn't being used. With Azure Table storage one only pays for capacity that's used.
+
+https://learn.microsoft.com/en-us/azure/cosmos-db/table/faq
+
 Select a candidate
 
 https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-decision-tree
