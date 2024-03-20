@@ -48,7 +48,7 @@ MS Learn:
 * etc
 https://learn.microsoft.com/en-us/samples/browse/?products=azure-functions&languages=python
 
-## How to steps as an example with CoinWorker Http trigger (Queue operations) and Firi API
+## How to steps as an example with CoinWorker Http trigger (Queue/Table operations) and Firi API
 
 * API for data, https://developers.firi.com
 * Create an rg and add an azure function
