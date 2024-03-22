@@ -356,3 +356,8 @@ Insert entity
 
 ## Create a key vault for our table connection private link TODO
 
+* Create a key vault
+* Test it with pws
+* Create a private link
+* Test it with ps1
+
