@@ -54,7 +54,7 @@ class StorageTable():
         logging.info("Azure Table storage, trying to create table")
         found = False
         try:
-            new_table_name = "cointable01" 
+            new_table_name = "cointable013" 
             all_tables = self.table_service_client.list_tables()
             logging.info("All tables; " + str(all_tables))
             for table in all_tables:
@@ -69,18 +69,19 @@ class StorageTable():
         except Exception as ex:
             logging.error(ex)
 
-    def insert_entity(self, name, description, value):
+    def insert_entity(self, name, description, value, volume):
         # https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python#creating-entities
         self.connect_table()
         logging.info("Trying to insert to table")
         try:
-            new_table_name = "cointable01"
+            new_table_name = "cointable013"
             row_key = str(uuid.uuid4())
             my_entity = {
-                 u'PartitionKey': name,
-                 u'RowKey': row_key,
-                 u'Description': description,
-                 u'LastValue': value,
+                 "PartitionKey": name,
+                 "RowKey": row_key,
+                 "Description": description,
+                 "LastValue": value,
+                 "VolumeToday": volume
 
             }
             table_service_client = self.table_service_client
