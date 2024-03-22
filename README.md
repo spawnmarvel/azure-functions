@@ -364,7 +364,7 @@ Insert entity
 
 Update st_key_vault.py
 
-## Debug
+## Debug in portal
 
 https://follow-e-lo.com/2024/03/22/azure-function-python-step-7-debug/
 
