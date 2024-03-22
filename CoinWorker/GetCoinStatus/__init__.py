@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     xrpnok = workerInstance.get_xrpnok()
     xrp_status = workerInstance.calculate_status(xrpnok)
     # just insert in az table, not API result
-    btcpnok = workerInstance.get_btpnok()
+    btcpnok = workerInstance.get_btcnok()
     btc_status = workerInstance.calculate_status(xrpnok)
     
     coinmarket = workerInstance.get_coin_market()
