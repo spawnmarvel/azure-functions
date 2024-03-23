@@ -10,7 +10,7 @@ class KeyVaultWorker:
         self.secret_client = None
         self.url = "https://keyvault001x01.vault.azure.net/"
 
-    def get_secret_tbl(self):
+    def get_st_acc_key(self):
         get_key = None
         logging.info("Azure Key vault, trying to connect")
         try:
@@ -18,12 +18,12 @@ class KeyVaultWorker:
             credential = DefaultAzureCredential()
             self.secret_client = SecretClient(vault_url=self.url, credential=credential)
             get_key = self.secret_client.get_secret("coin-tbl")
-            logging.info("Azure Key vault get success, tbl")
+            logging.info("Azure Key vault get success, tbl, st key.")
         except Exception as ex:
             logging.error(ex)
         return get_key.value
     
-    def get_name_acc(self):
+    def get_st_acc_name(self):
         get_key = None
         logging.info("Azure Key vault, trying to connect")
         try:
@@ -31,13 +31,13 @@ class KeyVaultWorker:
             credential = DefaultAzureCredential()
             self.secret_client = SecretClient(vault_url=self.url, credential=credential)
             get_key = self.secret_client.get_secret("coin-acc")
-            logging.info("Azure Key vault get success, acc")
+            logging.info("Azure Key vault get success, acc, acc name")
         except Exception as ex:
             logging.error(ex)
         return get_key.value
     
 
-    def get_url_tbl(self):
+    def get_st_url_tbl(self):
         get_key = None
         logging.info("Azure Key vault, trying to connect")
         try:
@@ -50,7 +50,7 @@ class KeyVaultWorker:
             logging.error(ex)
         return get_key.value
     
-    def get_url_qu(self):
+    def get_st_url_qu(self):
         get_key = None
         logging.info("Azure Key vault, trying to connect")
         try:

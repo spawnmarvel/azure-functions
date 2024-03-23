@@ -9,7 +9,7 @@ from azure.identity import DefaultAzureCredential
 from azure.data.tables import TableServiceClient, TableClient
 from azure.core.credentials import AzureNamedKeyCredential
 
-from GetCoinStatus.st_key_vault import KeyVaultWorker
+from GetCoinStatus.key_vault import KeyVaultWorker
 
 class StorageTable():
 
@@ -19,25 +19,27 @@ class StorageTable():
         self.key = None
         self.acc_name = None
         self.acc_url = None
+        # the table is auto created of not exist
+        self.table_name = "cointable015"
         self.keyvaultInstance = KeyVaultWorker()
         
 
-    def get_key_tbl(self):
+    def get_storage_acc_key(self):
         logging.info("Azure Table storage, get key tbl")
-        self.key = self.keyvaultInstance.get_secret_tbl()
+        self.key = self.keyvaultInstance.get_st_acc_key()
     
-    def get_name_st(self):
+    def get_storage_acc_name(self):
         logging.info("Azure Table storage, get name st")
-        self.acc_name = self.keyvaultInstance.get_name_acc()
+        self.acc_name = self.keyvaultInstance.get_st_acc_name()
 
-    def get_url_st(self):
+    def get_storage_url_tbl(self):
         logging.info("Azure Table storage, url st")
-        self.acc_url = self.keyvaultInstance.get_url_tbl()
+        self.acc_url = self.keyvaultInstance.get_st_url_tbl()
 
     def connect_table(self):
-        self.get_key_tbl()
-        self.get_name_st()
-        self.get_url_st()
+        self.get_storage_acc_key()
+        self.get_storage_acc_name()
+        self.get_storage_url_tbl()
         logging.info("Azure Table storage, trying to connect to table storage")
         try:
             # Quickstart code goes here
@@ -54,7 +56,7 @@ class StorageTable():
         logging.info("Azure Table storage, trying to create table")
         found = False
         try:
-            new_table_name = "cointable013" 
+            new_table_name = self.table_name
             all_tables = self.table_service_client.list_tables()
             logging.info("All tables; " + str(all_tables))
             for table in all_tables:
@@ -69,19 +71,20 @@ class StorageTable():
         except Exception as ex:
             logging.error(ex)
 
-    def insert_entity(self, name, description, value, volume):
+    def insert_entity(self, name, description, value, volume, change):
         # https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python#creating-entities
         self.connect_table()
         logging.info("Trying to insert to table")
         try:
-            new_table_name = "cointable013"
+            new_table_name = self.table_name
             row_key = str(uuid.uuid4())
             my_entity = {
                  "PartitionKey": name,
                  "RowKey": row_key,
                  "Description": description,
-                 "LastValue": value,
-                 "VolumeToday": volume
+                 "CurrentPriceNok": value,
+                 "TradeVolume24h": volume,
+                 "ChangePercent24h": change
 
             }
             table_service_client = self.table_service_client
