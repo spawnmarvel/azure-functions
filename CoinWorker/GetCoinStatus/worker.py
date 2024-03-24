@@ -204,21 +204,21 @@ class Worker:
             
             # SOL EXAMPLE, < 125
             if current_value <low_2:
-                market = "Bear Low 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bear Low 2. Buy." + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 2.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 2. Buy.", str(coin_dict["last"]), volume, change)
                 logging.info("ALERTMSG-COIN-LOW-2")
             
             # SOL EXAMPLE, >= 125 and < 250
             elif current_value >=low_2 and current_value < low_1:
-                market = "Bear Low 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bear Low 1. Buy some." + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 1.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 1. Buy some.", str(coin_dict["last"]), volume, change)
                 
                 # logging.info("ALERTMSG-COIN")
             
@@ -231,7 +231,7 @@ class Worker:
            
             # SOL EXAMPLE, >= 1000 and < 1500
             elif current_value >= high_1 and current_value < high_2:
-                market = "Bull High 1. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull High 1." + coin_dict["Coin"] + ";" + coin_dict["last"]
                 self.queueInstance.send_msg(market)
                 # insert into table storage
                 self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 1.", str(coin_dict["last"]), volume, change)
@@ -240,20 +240,20 @@ class Worker:
             # SOL EXAMPLE >= 1500 and < 3000
             elif current_value >= high_2 and current_value < (high_2 * 1.5):
                 # earning if follow only buy limit
-                market = "Bull High 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull High 2. Sell some." + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 2.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 2. Sell some.", str(coin_dict["last"]), volume, change)
                 logging.info("ALERTMSG-COIN-HIGH-2")
             
             elif current_value >= high_2 * 2:
                 # earning if follow only buy limit
-                market = "Bull high * 2. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull high * 2. Sell more." + coin_dict["Coin"] + ";" + coin_dict["last"]
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear High * 2.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear High * 2. Sell more.", str(coin_dict["last"]), volume, change)
                 logging.info("ALERTMSG-COIN-MONEY")
 
             else:
