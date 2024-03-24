@@ -219,8 +219,7 @@ class Worker:
                 self.queueInstance.send_msg(market)
                 # insert into table storage
                 self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 1. Buy some.", str(coin_dict["last"]), volume, change)
-                
-                # logging.info("ALERTMSG-COIN")
+                logging.info("ALERTMSG-COIN-LOW-1")
             
             # SOL EXAMPLE, >= 250 and < 1000
             elif current_value >= low_1 and current_value < high_1:
