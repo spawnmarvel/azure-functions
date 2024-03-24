@@ -28,5 +28,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     coinmarket = workerInstance.get_coin_market()
 
     length_of_queue = workerInstance.queue_length()
-    li = [sol_status, dot_status, xrp_status, ada_status, coinmarket, length_of_queue]
+    li = [sol_status, dot_status, xrp_status, ada_status, btc_status, coinmarket, length_of_queue]
     return func.HttpResponse(str(li), mimetype="text/json")
+    # return func.HttpResponse(str(li), mimetype="text/html")
+    # return func.HttpResponse(str(li), mimetype="text/xml")
+    
+    # HttpResponse Class
+    # https://learn.microsoft.com/en-us/python/api/azure-functions/azure.functions.httpresponse?view=azure-python
+    
