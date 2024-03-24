@@ -60,8 +60,8 @@ class Worker:
             # what volume is thsi, daily sold?
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 180000
-            stats["Low 1"] = 300000
+            stats["Low 2"] = 300000
+            stats["Low 1"] = 500000
             stats["High 1"] = 700000
             stats["High 2"] = 720000
             logging.info(stats)
