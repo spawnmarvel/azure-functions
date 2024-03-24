@@ -36,7 +36,7 @@ class Worker:
     
     def get_coin_market(self):
         dict = {"Data NOK": "https://firi.com/no", "Api": "https://developers.firi.com/",
-                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "fb": "25.09.2022", "lb": "12.05.2023", "25":"25.12.2024", "?":"25.12.2025"}
+                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "firstb": "25.09.2022", "Bear market:": "Down -61% to -20%, avg(30%)"}
         return dict
 
     def get_btcnok(self):
@@ -60,8 +60,8 @@ class Worker:
             # what volume is thsi, daily sold?
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 300000
-            stats["Low 1"] = 500000
+            stats["Low 2"] = 500000
+            stats["Low 1"] = 570000
             stats["High 1"] = 700000
             stats["High 2"] = 720000
             logging.info(stats)
