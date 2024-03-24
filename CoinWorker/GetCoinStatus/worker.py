@@ -60,10 +60,10 @@ class Worker:
             # what volume is thsi, daily sold?
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 120000
-            stats["Low 1"] = 170000
-            stats["High 1"] = 500000
-            stats["High 2"] = 620000
+            stats["Low 2"] = 180000
+            stats["Low 1"] = 300000
+            stats["High 1"] = 700000
+            stats["High 2"] = 720000
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -89,7 +89,7 @@ class Worker:
             stats["last"] = last
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 250
+            stats["Low 2"] = 300
             stats["Low 1"] = 500
             stats["High 1"] = 2000
             # has been here two times 2021 and 2024
@@ -120,10 +120,10 @@ class Worker:
             stats["last"] = last
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 1.8
-            stats["Low 1"] = 2
-            stats["High 1"] = 8
-            stats["High 2"] = 12
+            stats["Low 2"] = 4
+            stats["Low 1"] = 6.2
+            stats["High 1"] = 15
+            stats["High 2"] = 20
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -149,10 +149,10 @@ class Worker:
             stats["last"] = last
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 30
-            stats["Low 1"] = 60
-            stats["High 1"] = 110
-            stats["High 2"] = 150
+            stats["Low 2"] = 50
+            stats["Low 1"] = 65
+            stats["High 1"] = 150
+            stats["High 2"] = 350
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -178,10 +178,10 @@ class Worker:
             stats["last"] = last
             stats["volume"] = result["volume"]
             # limits
-            stats["Low 2"] = 1.8
-            stats["Low 1"] = 2
+            stats["Low 2"] = 3.5
+            stats["Low 1"] = 4
             stats["High 1"] = 10
-            stats["High 2"] = 15
+            stats["High 2"] = 20
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
