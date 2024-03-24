@@ -35,8 +35,9 @@ class Worker:
         return stats
     
     def get_coin_market(self):
+        bears = ["1/4/2002–10/9/2002, days 278", "10/9/2007–11/20/2008, days 408", "1/6/2009–3/9/2009, days 62", "2/19/2020–3/23/2020, days 33", "1/3/2022–10/12/2022, days 282"]
         dict = {"Data NOK": "https://firi.com/no", "Api": "https://developers.firi.com/",
-                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "firstb": "25.09.2022", "Bear market:": "Down -61% to -20%, avg(30%)"}
+                "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "firstb": "25.09.2022", "Bear market:": "Down -61% to -20%, avg(30%)", "5 last bears": bears}
         return dict
 
     def get_btcnok(self):
