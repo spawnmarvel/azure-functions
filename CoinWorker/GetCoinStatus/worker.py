@@ -60,17 +60,17 @@ class Worker:
             logging.debug(result)
             stats["Status Code"] = rv.status_code
             stats["Coin"] = coin
-            # highest price for one buyer, we are looking at sum of all buyers
+            # highest price one buyer is willing to pay , we are looking at sum of all buyers
             current_bids = result["bids"]
-            # lowest price for one buyer, we are looking at sum of all sellers
+            # lowest price one buyer is willing to sell, we are looking at sum of all sellers
             current_asks = result["asks"]
             bids = 0
             asks = 0
             for b in current_bids:
-                # when bid > ask, selling is stronger and price likely to move down
+                # when bid volume > ask volume, selling is stronger and price likely to move down
                 bids +=1
             for a in current_asks:
-                # when ask > bid, buying is stronger and price likely to move up
+                # when ask volume > bid volume, buying is stronger and price likely to move up
                 asks +=1
             logging.debug(stats)
             ba = "Bids " + str(bids) + ". Asks " +str(asks)
