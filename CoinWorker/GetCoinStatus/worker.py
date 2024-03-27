@@ -40,8 +40,51 @@ class Worker:
                 "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "firstb": "25.09.2022", "Bear market:": "Down -61% to -20%, avg(30%)", "5 last bears": bears}
         return dict
 
+    
+    
+    def get_bids_asks_orderbooks(self, coin_name):
+        coin = str(coin_name)        
+        logging.info("Coin depth for " + coin)
+
+        COIN_DEPTH = "https://api.firi.com/v1/markets/" + coin + "/depth"
+        return_dict ={}
+        ba = ""
+        stats = {}
+        stats["Api version"] = "1.1"
+        try:
+            rv = requests.get(COIN_DEPTH, headers={"User-Agent": "XY"})
+            result = rv.json()
+            logging.debug(result)
+            logging.debug(rv.status_code)
+            logging.debug(str(type(result)))
+            logging.debug(result)
+            stats["Status Code"] = rv.status_code
+            stats["Coin"] = coin
+            current_bids = result["bids"]
+            # lowest price for one buyer, we are looking at sum of all sellers
+            current_asks = result["asks"]
+            bids = 0
+            asks = 0
+            for b in current_bids:
+                # when bid > ask, selling is stronger and price likely to move down
+                bids +=1
+            for a in current_asks:
+                # when ask > bid, buying is stronger and price likely to move up
+                asks +=1
+            logging.debug(stats)
+            ba = "Bids " + str(bids) + ". Asks " +str(asks)
+            return_dict["depth"]= ba
+            logging.info(return_dict)
+
+        except Exception as ex:
+            logging.error(ex)
+        return return_dict
+    
+    
+    
     def get_btcnok(self):
-        logging.info("BTCNOK:")
+        coin = "BTCNOK"
+        logging.info(coin)
         MARKET_BTCNOK = "https://api.firi.com/v2/markets/BTCNOK"
         stats = {}
         stats["Api version"] = "2.0"
@@ -66,12 +109,15 @@ class Worker:
             stats["High 1"] = 700000
             stats["High 2"] = 720000
             logging.info(stats)
+            dict = self.get_bids_asks_orderbooks(coin)
+            stats["Depth"] = dict["depth"]
         except Exception as ex:
             logging.error(ex)
         return stats
 
     def get_solnok(self):
-        logging.info("SOLNOK:")
+        coin = "SOLNOK"
+        logging.info(coin)
         MARKET_SOLNOK = "https://api.firi.com/v2/markets/SOLNOK"
         stats = {}
         stats["Api version"] = "2.0"
@@ -97,11 +143,14 @@ class Worker:
             # stats["High 2"] = 2000
             stats["High 2"] = 3000
             logging.info(stats)
+            dict = self.get_bids_asks_orderbooks(coin)
+            stats["Depth"] = dict["depth"]
         except Exception as ex:
             logging.error(ex)
         return stats
 
     def get_adanok(self):
+        coin = "ADANOK"
         logging.info("ADANOK:")
         MARKET_ADANOK = "https://api.firi.com/v2/markets/ADANOK"
         stats = {}
@@ -125,13 +174,16 @@ class Worker:
             stats["Low 1"] = 6.2
             stats["High 1"] = 15
             stats["High 2"] = 20
+            dict = self.get_bids_asks_orderbooks(coin)
+            stats["Depth"] = dict["depth"]
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
         return stats
 
     def get_dotnok(self):
-        logging.info("DOTNOK:")
+        coin = "DOTNOK"
+        logging.info(coin)
         MARKET_DOTNOK = "https://api.firi.com/v2/markets/DOTNOK"
         stats = {}
         stats["Api version"] = "1.5"
@@ -154,13 +206,16 @@ class Worker:
             stats["Low 1"] = 65
             stats["High 1"] = 150
             stats["High 2"] = 350
+            dict = self.get_bids_asks_orderbooks(coin)
+            stats["Depth"] = dict["depth"]
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
         return stats
 
     def get_xrpnok(self):
-        logging.info("XRPNOK:")
+        coin = "XRPNOK"
+        logging.info(coin)
         MARKET_DOTNOK = "https://api.firi.com/v2/markets/XRPNOK"
         stats = {}
         stats["Api version"] = "1.5"
@@ -183,6 +238,8 @@ class Worker:
             stats["Low 1"] = 4
             stats["High 1"] = 10
             stats["High 2"] = 20
+            dict = self.get_bids_asks_orderbooks(coin)
+            stats["Depth"] = dict["depth"]
             logging.info(stats)
         except Exception as ex:
             logging.error(ex)
@@ -194,6 +251,7 @@ class Worker:
         # msg = coin_dict["Coin"] + ";" + coin_dict["last"]
         try:
             logging.info("Caluclate status")
+            name = str(coin_dict["Coin"])
             low_2 = float(coin_dict["Low 2"])
             low_1 = float(coin_dict["Low 1"])
             high_1 = float(coin_dict["High 1"])
@@ -201,63 +259,65 @@ class Worker:
             current_value = float(coin_dict["last"])
             volume = float(coin_dict["volume"])
             change = float(coin_dict["change"])
+            depth = coin_dict["Depth"]
             
             # SOL EXAMPLE, < 125
             if current_value <low_2:
-                market = "Bear Low 2. Buy." + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bear Low 2. Buy." + name+ "." + str(current_value)
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 2. Buy.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Bear Low 2. Buy.", current_value, volume, change, depth)
                 logging.info("ALERTMSG-COIN-LOW-2")
             
             # SOL EXAMPLE, >= 125 and < 250
             elif current_value >=low_2 and current_value < low_1:
-                market = "Bear Low 1. Buy some." + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bear Low 1. Buy some."+ name+ "." + str(current_value)
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear Low 1. Buy some.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Bear Low 1. Buy some.", current_value, volume, change, depth)
                 logging.info("ALERTMSG-COIN-LOW-1")
             
             # SOL EXAMPLE, >= 250 and < 1000
             elif current_value >= low_1 and current_value < high_1:
-                market = "Waiting. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Waiting. " + name+ "." + str(current_value)
                 # wait....
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Waiting.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Waiting.", current_value, volume, change, depth)
            
             # SOL EXAMPLE, >= 1000 and < 1500
             elif current_value >= high_1 and current_value < high_2:
-                market = "Bull High 1." + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull High 1." + name+ "." + str(current_value) 
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 1.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Bull High 1.", current_value, volume, change, depth)
                 # logging.info("ALERTMSG-COIN")
 
             # SOL EXAMPLE >= 1500 and < 3000
             elif current_value >= high_2 and current_value < (high_2 * 1.5):
                 # earning if follow only buy limit
-                market = "Bull High 2. Sell some." + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull High 2. Sell some." + name+ "." + str(current_value) 
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bull High 2. Sell some.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Bull High 2. Sell some.", current_value, volume, change, depth)
                 logging.info("ALERTMSG-COIN-HIGH-2")
             
             elif current_value >= high_2 * 2:
                 # earning if follow only buy limit
-                market = "Bull high * 2. Sell more." + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Bull high * 2. Sell more." + name+ "." + str(current_value)
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(str(coin_dict["Coin"]), "Bear High * 2. Sell more.", str(coin_dict["last"]), volume, change)
+                self.tableInstance.insert_entity(name, "Bear High * 2. Sell more.", current_value, volume, change, depth)
                 logging.info("ALERTMSG-COIN-MONEY")
 
             else:
-                market = "Status. " + coin_dict["Coin"] + ";" + coin_dict["last"]
+                market = "Status. " + name+ "." + str(current_value) 
                 self.queueInstance.send_msg(market)
+                self.tableInstance.insert_entity(name, "Status.", current_value, volume, change, depth)
 
             # add status here market
             coin_dict["status"] = market

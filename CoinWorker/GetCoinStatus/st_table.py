@@ -71,7 +71,7 @@ class StorageTable():
         except Exception as ex:
             logging.error(ex)
 
-    def insert_entity(self, name, description, value, volume, change):
+    def insert_entity(self, name, description, value, volume, change, bids_asks):
         # https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python#creating-entities
         self.connect_table()
         logging.info("Trying to insert to table")
@@ -84,7 +84,8 @@ class StorageTable():
                  "Description": description,
                  "CurrentPriceNok": value,
                  "TradeVolume24h": volume,
-                 "ChangePercent24h": change
+                 "ChangePercent24h": change,
+                 "BidsAsks24h":bids_asks
 
             }
             table_service_client = self.table_service_client
