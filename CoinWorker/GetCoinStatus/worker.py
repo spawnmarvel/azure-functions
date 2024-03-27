@@ -73,7 +73,13 @@ class Worker:
                 # when ask volume > bid volume, buying is stronger and price likely to move up
                 asks +=1
             logging.debug(stats)
-            ba = "Bids " + str(bids) + ". Asks " +str(asks)
+            market = ""
+            if bids > asks:
+                market = ". More sellers, price down."
+            else:
+                market = ". More buyers, price up."
+
+            ba = "Bids " + str(bids) + ". Asks " +str(asks) + market
             return_dict["depth"]= ba
             logging.info(return_dict)
 
