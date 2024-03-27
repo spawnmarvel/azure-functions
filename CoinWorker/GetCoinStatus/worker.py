@@ -60,6 +60,7 @@ class Worker:
             logging.debug(result)
             stats["Status Code"] = rv.status_code
             stats["Coin"] = coin
+            # highest price for one buyer, we are looking at sum of all buyers
             current_bids = result["bids"]
             # lowest price for one buyer, we are looking at sum of all sellers
             current_asks = result["asks"]
