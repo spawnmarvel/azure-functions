@@ -71,11 +71,20 @@ class StorageTable():
         except Exception as ex:
             logging.error(ex)
 
-    def insert_entity(self, name, description, value, volume, change, bids_asks):
+    def insert_entity(self, name, description, value, volume, change, bids_asks, low, high):
         # https://learn.microsoft.com/en-us/python/api/overview/azure/data-tables-readme?view=azure-python#creating-entities
         self.connect_table()
         logging.info("Trying to insert to table")
         try:
+            ch = float(change)
+            bear_or_bull = ""
+            if ch > 19.9:
+                bear_or_bull = "Bull ahead."
+            elif ch < -19.9:
+                bear_or_bull = "Bear ahead."
+            else:
+                bear_or_bull = "Stable market."
+
             new_table_name = self.table_name
             row_key = str(uuid.uuid4())
             my_entity = {
@@ -85,7 +94,10 @@ class StorageTable():
                  "CurrentPriceNok": value,
                  "TradeVolume24h": volume,
                  "ChangePercent24h": change,
-                 "BidsAsks24h":bids_asks
+                 "BidsAsks24h":bids_asks,
+                 "LowPriceNok": low,
+                 "HighPriceNok": high,
+                 "BearOrBullPercent": bear_or_bull
 
             }
             table_service_client = self.table_service_client

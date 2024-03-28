@@ -35,7 +35,7 @@ class Worker:
         return stats
     
     def get_coin_market(self):
-        bears = ["1/4/2002–10/9/2002, days 278, -33.75", "10/9/2007–11/20/2008, days 408, -51.93", "1/6/2009–3/9/2009, days 62, -27.62", "2/19/2020–3/23/2020, days 33, -33.92", "1/3/2022–10/12/2022, days 282, 25.43"]
+        bears = ["1/4/2002–10/9/2002, days 278, -33.75", "10/9/2007–11/20/2008, days 408, -51.93", "1/6/2009–3/9/2009, days 62, -27.62", "2/19/2020–3/23/2020, days 33, -33.92", "1/3/2022–10/12/2022, days 282, -25.43"]
         dict = {"Data NOK": "https://firi.com/no", "Api": "https://developers.firi.com/",
                 "coinmarketcap": "https://coinmarketcap.com/", "Author": "https://follow-e-lo.com/", "firstb": "25.09.2022", "Bear market:": "Down -61% to -20%, avg(30%)", "5 last bears": bears}
         return dict
@@ -104,10 +104,14 @@ class Worker:
             stats["Coin"] = "BTCNOK"
             change = result["change"]
             last = result["last"]
+            low = result["low"]
+            high = result["high"]
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
+            stats["low"] = low
+            stats["high"] = high
             # what volume is thsi, daily sold?
             stats["volume"] = result["volume"]
             # limits
@@ -137,10 +141,14 @@ class Worker:
             stats["Coin"] = "SOLNOK"
             change = result["change"]
             last = result["last"]
+            low = result["low"]
+            high = result["high"]
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
+            stats["low"] = low
+            stats["high"] = high
             stats["volume"] = result["volume"]
             # limits
             stats["Low 2"] = 300
@@ -171,10 +179,14 @@ class Worker:
             stats["Coin"] = "ADANOK"
             change = result["change"]
             last = result["last"]
+            low = result["low"]
+            high = result["high"]
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
+            stats["low"] = low
+            stats["high"] = high
             stats["volume"] = result["volume"]
             # limits
             stats["Low 2"] = 4
@@ -203,10 +215,14 @@ class Worker:
             stats["Coin"] = "DOTNOK"
             change = result["change"]
             last = result["last"]
+            low = result["low"]
+            high = result["high"]
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
+            stats["low"] = low
+            stats["high"] = high
             stats["volume"] = result["volume"]
             # limits
             stats["Low 2"] = 50
@@ -235,10 +251,14 @@ class Worker:
             stats["Coin"] = "XRPNOK"
             change = result["change"]
             last = result["last"]
+            low = result["low"]
+            high = result["high"]
             stats["change"] = change
             current_time = str(datetime.now())
             stats["Time"] = current_time
             stats["last"] = last
+            stats["low"] = low
+            stats["high"] = high
             stats["volume"] = result["volume"]
             # limits
             stats["Low 2"] = 3.5
@@ -267,6 +287,8 @@ class Worker:
             volume = float(coin_dict["volume"])
             change = float(coin_dict["change"])
             depth = coin_dict["Depth"]
+            low = coin_dict["low"]
+            high = coin_dict["high"]
             
             # SOL EXAMPLE, < 125
             if current_value <low_2:
@@ -275,7 +297,7 @@ class Worker:
                 self.queueInstance.send_msg(market)
                 # https://stackoverflow.com/questions/58246398/how-do-i-send-email-from-an-azure-function-app
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Bear Low 2. Buy.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Bear Low 2. Buy.", current_value, volume, change, depth, low, high)
                 logging.info("ALERTMSG-COIN-LOW-2")
             
             # SOL EXAMPLE, >= 125 and < 250
@@ -284,7 +306,7 @@ class Worker:
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Bear Low 1. Buy some.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Bear Low 1. Buy some.", current_value, volume, change, depth, low, high)
                 logging.info("ALERTMSG-COIN-LOW-1")
             
             # SOL EXAMPLE, >= 250 and < 1000
@@ -292,14 +314,14 @@ class Worker:
                 market = "Waiting. " + name+ "." + str(current_value)
                 # wait....
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Waiting.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Waiting.", current_value, volume, change, depth, low, high)
            
             # SOL EXAMPLE, >= 1000 and < 1500
             elif current_value >= high_1 and current_value < high_2:
                 market = "Bull High 1." + name+ "." + str(current_value) 
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Bull High 1.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Bull High 1.", current_value, volume, change, depth, low, high)
                 # logging.info("ALERTMSG-COIN")
 
             # SOL EXAMPLE >= 1500 and < 3000
@@ -309,7 +331,7 @@ class Worker:
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Bull High 2. Sell some.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Bull High 2. Sell some.", current_value, volume, change, depth, low, high)
                 logging.info("ALERTMSG-COIN-HIGH-2")
             
             elif current_value >= high_2 * 2:
@@ -318,13 +340,13 @@ class Worker:
                 # send to queue
                 self.queueInstance.send_msg(market)
                 # insert into table storage
-                self.tableInstance.insert_entity(name, "Bear High * 2. Sell more.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Bear High * 2. Sell more.", current_value, volume, change, depth, low, high)
                 logging.info("ALERTMSG-COIN-MONEY")
 
             else:
                 market = "Status. " + name+ "." + str(current_value) 
                 self.queueInstance.send_msg(market)
-                self.tableInstance.insert_entity(name, "Status.", current_value, volume, change, depth)
+                self.tableInstance.insert_entity(name, "Status.", current_value, volume, change, depth, low, high)
 
             # add status here market
             coin_dict["status"] = market
