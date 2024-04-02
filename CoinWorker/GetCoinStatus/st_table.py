@@ -81,11 +81,11 @@ class StorageTable():
             ch_limit_neg = -19.9
             bear_or_bull = ""
             if ch >= ch_limit_pos:
-                bear_or_bull = "Bull ahead. " + str(ch_limit_pos)
+                bear_or_bull = "Bull ahead." + str(ch_limit_pos)
             elif ch <= ch_limit_neg:
-                bear_or_bull = "Bear ahead. " + str(ch_limit_pos)
+                bear_or_bull = "Bear ahead." + str(ch_limit_pos)
             else:
-                bear_or_bull = "Stable market. " + str(ch_limit_pos) + "." + str(ch_limit_neg)
+                bear_or_bull = "Stable market." + str(ch_limit_pos) + "." + str(ch_limit_neg)
 
             new_table_name = self.table_name
             row_key = str(uuid.uuid4())
