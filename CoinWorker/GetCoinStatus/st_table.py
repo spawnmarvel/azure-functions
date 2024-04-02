@@ -77,13 +77,15 @@ class StorageTable():
         logging.info("Trying to insert to table")
         try:
             ch = float(change)
+            ch_limit_pos = 19.9
+            ch_limit_neg = -19.9
             bear_or_bull = ""
-            if ch > 19.9:
-                bear_or_bull = "Bull ahead."
-            elif ch < -19.9:
-                bear_or_bull = "Bear ahead."
+            if ch >= ch_limit_pos:
+                bear_or_bull = "Bull ahead. " + str(ch_limit_pos)
+            elif ch <= ch_limit_neg:
+                bear_or_bull = "Bear ahead. " + str(ch_limit_pos)
             else:
-                bear_or_bull = "Stable market."
+                bear_or_bull = "Stable market. " + str(ch_limit_pos) + "." + str(ch_limit_neg)
 
             new_table_name = self.table_name
             row_key = str(uuid.uuid4())
